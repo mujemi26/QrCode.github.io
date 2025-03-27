@@ -19,8 +19,17 @@ function generateQR() {
     // Clear previous QR code
     qrCode.innerHTML = '';
 
-    // Calculate QR code size based on container width
-    const size = Math.min(200, window.innerWidth - 40);
+    // Calculate QR code size based on screen size
+    const screenWidth = window.innerWidth;
+    let size;
+    
+    if (screenWidth <= 320) {
+        size = 150;
+    } else if (screenWidth <= 480) {
+        size = 180;
+    } else {
+        size = 200;
+    }
 
     // Generate new QR code
     new QRCode(qrCode, {
@@ -46,11 +55,15 @@ generateBtn.addEventListener('animationend', () => {
     generateBtn.style.animation = '';
 });
 
-// Add resize handler
+// Update QR size on resize
+let resizeTimer;
 window.addEventListener('resize', () => {
-    if (qrText.value) {
-        generateQR();
-    }
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (qrText.value) {
+            generateQR();
+        }
+    }, 250); // Debounce resize events
 });
 
 qrText.addEventListener('keyup', (e) => {

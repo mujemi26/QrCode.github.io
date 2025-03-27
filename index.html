@@ -9,13 +9,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>QR Code Generator</h1>
+        <div class="modern-title">
+            <span class="title-text">QR Code Generator</span>
+            <div class="title-glow"></div>
+        </div>
         <div class="input-section">
             <input type="text" id="qr-text" placeholder="Enter text or URL">
             <button id="generate">Generate QR</button>
         </div>
         <div class="qr-container">
             <div id="qr-code"></div>
+            <button id="download" class="download-btn" style="display: none;">Download QR</button>
         </div>
         <div class="signature">
             Made with <span class="heart">♥</span> by <span class="name">Mujimmy</span>

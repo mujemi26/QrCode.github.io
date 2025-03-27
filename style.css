@@ -40,6 +40,30 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
+/* Add new media query for larger screens */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 80%;
+        padding: 3rem;
+        margin: 2rem;
+    }
+
+    .qr-container {
+        max-width: 300px;
+    }
+
+    .input-section input {
+        max-width: 400px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        max-width: 70%;
+        padding: 4rem;
+    }
+}
+
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -52,11 +76,86 @@ body {
     }
 }
 
+/* Remove old h1 styles */
 h1 {
-    color: white;
+    display: none;
+}
+
+/* Add modern animated title styles */
+.modern-title {
+    position: relative;
     margin-bottom: 2rem;
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    padding: 0.5rem;
+}
+
+.title-text {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    background: linear-gradient(
+        to right,
+        #00ff87,
+        #60efff,
+        #0061ff,
+        #00ff87
+    );
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: gradient 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 2px rgba(96, 239, 255, 0.3));
+}
+
+.title-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle,
+        rgba(96, 239, 255, 0.15) 0%,
+        transparent 70%
+    );
+    filter: blur(20px);
+    z-index: -1;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+}
+
+/* Add modern underline effect */
+.title-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #00ff87, #60efff);
+    border-radius: 2px;
+    animation: lineWidth 3s ease-in-out infinite;
+}
+
+@keyframes lineWidth {
+    0% { width: 60px; opacity: 0.5; }
+    50% { width: 150px; opacity: 1; }
+    100% { width: 60px; opacity: 0.5; }
 }
 
 .input-section {
@@ -186,12 +285,67 @@ button:hover {
     transition: all 0.5s ease;
     width: 100%;
     max-width: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Add download button styles */
+.download-btn {
+    margin-top: 1rem;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    background-size: 200% 200%;
+}
+
+.download-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    background-position: right center;
+    box-shadow: 0 5px 15px rgba(0, 255, 135, 0.2),
+                0 0 20px rgba(96, 239, 255, 0.2);
+}
+
+.download-btn:hover:before {
+    left: 100%;
+}
+
+.download-btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 2px 10px rgba(0, 255, 135, 0.3);
 }
 
 .qr-container img {
     width: 100%;
     height: auto;
     display: block;
+}
+
+.qr-container.show {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.5s ease;
+}
+
+.qr-container.show:hover {
+    transform: scale(1.05) perspective(1000px) rotateX(2deg) rotateY(2deg);
+    box-shadow: 
+        0 10px 25px rgba(0, 255, 135, 0.1),
+        0 6px 12px rgba(96, 239, 255, 0.1),
+        0 0 20px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .qr-container.show {

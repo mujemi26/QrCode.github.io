@@ -19,6 +19,9 @@ function generateQR() {
     // Clear previous QR code
     qrCode.innerHTML = '';
 
+    // Hide download button initially
+    document.getElementById('download').style.display = 'none';
+
     // Calculate QR code size based on screen size
     const screenWidth = window.innerWidth;
     let size;
@@ -44,11 +47,35 @@ function generateQR() {
     // Show container with animation
     qrContainer.classList.add('show');
 
+    // Show download button after QR code is generated
+    setTimeout(() => {
+        document.getElementById('download').style.display = 'inline-block';
+    }, 100);
+
     // Add shake animation to button
     generateBtn.style.animation = 'none';
     generateBtn.offsetHeight; // Trigger reflow
     generateBtn.style.animation = 'shake 0.5s ease';
 }
+
+// Add download functionality
+document.getElementById('download').addEventListener('click', function() {
+    const qrImage = qrCode.querySelector('img');
+    if (qrImage) {
+        const link = document.createElement('a');
+        link.href = qrImage.src;
+        link.download = 'qrcode.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Add pulse animation to download button
+        this.style.animation = 'buttonPulse 0.8s ease';
+        setTimeout(() => {
+            this.style.animation = '';
+        }, 800);
+    }
+});
 
 // Add animation reset on animation end
 generateBtn.addEventListener('animationend', () => {
@@ -76,5 +103,6 @@ qrText.addEventListener('keyup', (e) => {
 qrText.addEventListener('input', () => {
     if (!qrText.value) {
         qrContainer.classList.remove('show');
+        document.getElementById('download').style.display = 'none';
     }
 });
